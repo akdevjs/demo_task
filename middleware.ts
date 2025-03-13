@@ -8,14 +8,15 @@ export function middleware(request: NextRequest) {
     authCookie === "Authenticated" &&
     request.nextUrl.pathname.includes("login")
   ) {
-    console.log("✅ Redirecting to /dashboard...");
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  if(authCookie !== "Authenticated" &&request.nextUrl.pathname.includes("dashboard")){
+  if (
+    authCookie !== "Authenticated" &&
+    request.nextUrl.pathname.includes("dashboard")
+  ) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-  console.log("➡️ Proceeding to the requested route...");
   return NextResponse.next();
 }
 
