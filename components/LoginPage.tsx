@@ -1,27 +1,41 @@
 "use client";
+// libs
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
+
+// hooks
+import { useToast } from "../hooks/useToast";
+
+// components
+import Button from "../ui/Button";
+import Input from "../ui/Input";
+import Toast from "./Toast";
+
+// utils
 import { password as pass, email as em } from "../utils/constants";
-import { toast } from "react-toastify";
 
 function LoginPage() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const { toast, showToast } = useToast();
 
+  // functions
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // this function gets the email and password from the user input match it if correct add the cookie with auth tokken and redirect to the dashboard
     e.preventDefault();
     if (email.toLowerCase() === em && password === pass) {
       document.cookie = "user=Authenticated; path=/;";
-      toast("Logged in successfully");
+      showToast("Logged in successfully", "success");
       redirect("/dashboard");
     } else {
-      toast("invalid email or password");
+      showToast("Invalid email or password", "error");
     }
   };
+
   return (
-    <div className="w-full h-screen flex">
+    <div className="relative w-full h-screen flex">
+      {toast && <Toast message={toast.message} type={toast.type} />}
       {/* left form section */}
       <div className="relative w-1/2 h-full flex items-center justify-center gap-11 flex-col ">
         <div className="absolute top-10 left-10 text-green-400">LOGO</div>
@@ -36,21 +50,19 @@ function LoginPage() {
             <p className="text-gray-700 text-xl">Please enter your detials</p>
           </div>
           <div className="flex flex-col w-full gap-5">
-            <input
+            <Input
               type="text"
               placeholder="email"
               name="email"
               value={email}
               onChange={(e) => setemail(e.target.value)}
-              className="border  rounded-md border-gray-600 bg-blue-100 p-2 outline:none"
             />
-            <input
+            <Input
               type="password"
               placeholder="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border  rounded-md border-gray-600 bg-blue-100 p-2 outline:none"
             />
           </div>
           <div className="flex justify-between items-center">
@@ -59,29 +71,30 @@ function LoginPage() {
               <label htmlFor="30-days">Remember for 30 days</label>
             </div>
 
-            <Link className="text-blue-600" href="#">
+            <Button
+              variant="ghost"
+              className="text-blue-600 hover:underline"
+              href="#"
+            >
               Forget Password
-            </Link>
+            </Button>
           </div>
           <div className="flex flex-col w-full gap-5">
-            <button
-              className="px-5 py-2 text-white bg-blue-600 hover:bg-blue-400 rounded-md"
-              type="submit"
-            >
-              Sign in
-            </button>
+            <Button type="submit">Sign in</Button>
 
-            <button className="px-5 py-2 text-white bg-gray-600 hover:bg-gray-400 rounded-md">
-              Sign in with Google
-            </button>
+            <Button variant="secondary">Sign in with Google</Button>
           </div>
         </form>
 
         <p>
-          {"Don't have an account"}
-          <Link href="#" className="text-blue-600">
+          {"Don't have an account "}
+          <Button
+            variant="ghost"
+            href="#"
+            className="text-blue-600 hover:underline"
+          >
             Sign up
-          </Link>
+          </Button>
         </p>
       </div>
       <div className="relative h-screen w-1/2 z-0">

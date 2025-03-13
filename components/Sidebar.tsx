@@ -1,25 +1,34 @@
 "use client";
+// libs
 import Link from "next/link";
-import React from "react";
+
+// components
+import ComponentPlaceholder from "../ui/ComponentPlaceholder";
 
 function Sidebar() {
+  const route = [
+    { label: "Dashboard", link: "/dashboard" },
+    { label: "Other Dashboard", link: "/dashboard/other" },
+  ];
   return (
-    <div className="p-10 w-[40%] h-full">
+    <ComponentPlaceholder
+      height="100%"
+      width="35%"
+      textColor="text-purple-900"
+      backgroundColor="bg-purple-200"
+    >
       <div className="w-full h-full flex flex-col p-5 gap-2 bg-purple-200 rounded-lg">
-        <Link
-          className="p-5 w-full rounded-md bg-purple-300 text-purple-900 font-semibold hover:bg-purple-500"
-          href="/dashboard"
-        >
-          Dashboard
-        </Link>
-        <Link
-          className="p-5 w-full rounded-md bg-purple-300 text-purple-900 font-semibold hover:bg-purple-500"
-          href="/dashboard/other"
-        >
-          Other Dashboard
-        </Link>
+        {route.map((item, index) => (
+          <Link
+            key={index}
+            className="p-5 w-full rounded-md bg-purple-300 text-purple-900 font-semibold hover:bg-purple-500"
+            href={item.link}
+          >
+            {item.label}
+          </Link>
+        ))}
       </div>
-    </div>
+    </ComponentPlaceholder>
   );
 }
 

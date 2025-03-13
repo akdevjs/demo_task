@@ -1,29 +1,46 @@
 "use client";
-import React from "react";
+// libs
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+
+// hooks
+import { useToast } from "../hooks/useToast";
+
+// components
+import Button from "../ui/Button";
+import ComponentPlaceholder from "../ui/ComponentPlaceholder";
+import Toast from "./Toast";
 
 function Header() {
+  const { toast, showToast } = useToast();
   const router = useRouter();
+  
+//functions
   const handlelogout = () => {
+    //handlelogout function basically remove the authentication tokken from the cookies and redirect it to login page
     Cookies.remove("user", { path: "/" });
-    toast("Logged out successfully");
+    showToast("Logged out successfully", "success");
     router.push("/login");
   };
   return (
-    <div className="p-10 h-fit">
-      <div className="w-full h-auto p-5 flex items-center justify-between px-5 bg-red-200 rounded-lg">
-        <h1 className="text-3xl text-red-950 font-bold">LOGO</h1>
+    <>
+      {toast && <Toast message={toast.message} type={toast.type} />}
 
-        <button
-          onClick={handlelogout}
-          className="px-10 py-2 rounded-l-full rounded-r-full bg-red-500 hover:bg-red-600 text-white"
-        >
-          Log out
-        </button>
-      </div>
-    </div>
+      <ComponentPlaceholder
+        height="fit-content"
+        width="100%"
+        textColor="text-red-900"
+        backgroundColor="bg-red-200"
+      >
+        <div className="w-full flex items-center justify-between ">
+          <h1 className="text-3xl font-bold">LOGO</h1>
+
+          <Button variant="danger" onClick={handlelogout}>
+            Log out
+          </Button>
+        </div>
+      </ComponentPlaceholder>
+    </>
   );
 }
 
