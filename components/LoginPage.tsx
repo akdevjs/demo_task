@@ -12,6 +12,7 @@ function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(pass, em);
     if (email.toLowerCase() === em && password === pass) {
       document.cookie = "user=Authenticated; path=/;";
       toast("Logged in successfully");
