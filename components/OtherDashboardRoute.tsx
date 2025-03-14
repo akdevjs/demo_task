@@ -1,16 +1,25 @@
+// components
 import ComponentPlaceholder from "../ui/ComponentPlaceholder";
+import ToastDemo from "../ui/ToastDemo";
 
 function OtherDashboardRoute() {
   return (
     <ComponentPlaceholder
       width="100%"
       height="100%"
-      textColor="text-purple-900"
-      backgroundColor="bg-purple-200"
+      textColor="text-green-900"
+      backgroundColor="bg-green-200"
     >
-      <h1 className="text-3xl font-bold max-w-96 text-center">
-        This is the other dashboard route
-      </h1>
+      <div className="flex flex-col gap-3 max-w-96 items-center">
+        <h1 className="text-3xl font-bold  text-center">
+          Hey! this is other dashboard
+        </h1>
+
+        <h2 className="text-xl text-center font-semibold">
+          But, you can still try my Toasts! 😊
+        </h2>
+        <ToastDemo />
+      </div>
     </ComponentPlaceholder>
   );
 }

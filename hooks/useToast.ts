@@ -12,9 +12,7 @@ export const useToast = () => {
     message: string,
     type: "success" | "error" = "success"
   ) => {
-    console.log(message, type);
     setToast({ message, type });
-    console.log(toast)
     setTimeout(() => {
       setToast(null);
     }, 3000);

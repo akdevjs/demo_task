@@ -7,9 +7,11 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   href?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const commonClasses = "px-5 py-2 rounded-md";
+const commonClasses =
+  "disabled:opacity-40 disabled:cursor-not-allowed disable px-5 py-2 rounded-md";
 
 const variantClasses = {
   primary: "bg-blue-600 hover:bg-blue-400 text-white",
@@ -25,6 +27,7 @@ const Button = ({
   type = "button",
   href,
   onClick,
+  disabled = false,
 }: ButtonProps) => {
   const classes = `${variantClasses[variant]} ${
     variant !== "ghost" && commonClasses
@@ -39,7 +42,12 @@ const Button = ({
   }
 
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <button
+      disabled={disabled}
+      type={type}
+      className={classes}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
